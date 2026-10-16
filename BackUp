@@ -1,0 +1,1162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>SuperCity Local Cache Archiver v2.4.1 (Build 8902)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Authentic 2011-2012 Web 2.0 / Windows 7 Portal Styling - NO smooth transitions or modern round avatars */
+        body {
+            font-family: Tahoma, Arial, Verdana, sans-serif;
+            font-size: 12px;
+            background-color: #9eadbd;
+            background-image: repeating-linear-gradient(
+                45deg,
+                #96a5b5,
+                #96a5b5 2px,
+                #9eadbd 2px,
+                #9eadbd 6px
+            );
+            color: #111111;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+        /* Rigid 2011 Outer Wrapper Box with sharp corners & heavy 1px borders */
+        .portal-wrapper {
+            background-color: #dce2e8;
+            border: 2px outset #ffffff;
+            outline: 1px solid #3b4652;
+            box-shadow: 3px 3px 0px rgba(0, 0, 0, 0.35);
+        }
+        .inset-panel {
+            background-color: #eceff3;
+            border: 2px inset #c4cdd6;
+        }
+        /* Classic HTML Fieldset with Legend */
+        fieldset.legacy-fieldset {
+            border: 1px solid #7f9db9;
+            background-color: #e4e9ef;
+            padding: 8px 10px 10px 10px;
+            margin-bottom: 12px;
+        }
+        fieldset.legacy-fieldset legend {
+            font-weight: bold;
+            color: #15428b;
+            padding: 0 4px;
+            font-size: 11px;
+            background-color: #e4e9ef;
+            border: 1px solid #7f9db9;
+        }
+        .enterprise-header {
+            background: #1b365d;
+            background: linear-gradient(180deg, #2b4c7e 0%, #1b365d 50%, #102442 51%, #162f54 100%);
+            border-bottom: 2px solid #d97706;
+        }
+        /* Web 2.0 Glossy Tab Bar */
+        .web20-nav {
+            background: linear-gradient(180deg, #f8fafc 0%, #e2e8f0 50%, #cbd5e1 51%, #d8e0ea 100%);
+            border-bottom: 1px solid #6b7c8e;
+        }
+        .web20-tab {
+            border-right: 1px solid #8696a7;
+            color: #222;
+        }
+        .web20-tab-active {
+            background: #ffffff;
+            color: #000000;
+            font-weight: bold;
+            border-bottom: 2px solid #15428b;
+        }
+        /* Classic Windows Forms / IE8 Button - zero transition! */
+        .enterprise-btn {
+            background: linear-gradient(180deg, #f9f9f9 0%, #e3e6ea 48%, #cfd4da 52%, #e3e6ea 100%);
+            border: 1px solid #707070;
+            box-shadow: inset 1px 1px 0 #fff;
+            color: #111;
+        }
+        .enterprise-btn:active:not(:disabled) {
+            background: #c4c9cf;
+            border: 1px inset #555;
+        }
+        .enterprise-btn-primary {
+            background: linear-gradient(180deg, #4f85bb 0%, #2d629b 49%, #19477a 51%, #23538a 100%);
+            border: 1px solid #0d2b4d;
+            color: #ffffff;
+        }
+        .enterprise-btn-primary:hover:not(:disabled) {
+            background: linear-gradient(180deg, #5e94ca 0%, #356da8 49%, #1e5087 51%, #2a5d96 100%);
+        }
+        .enterprise-btn-primary:disabled {
+            background: #c0c6cc;
+            border-color: #888888;
+            color: #666666;
+            cursor: default;
+        }
+        /* Classic XP/Win7 Text Input border */
+        .win7-input {
+            background-color: #ffffff;
+            border-top: 1px solid #5c6a79;
+            border-left: 1px solid #5c6a79;
+            border-right: 1px solid #b8c2cc;
+            border-bottom: 1px solid #b8c2cc;
+            font-family: "Courier New", Courier, monospace;
+        }
+        /* Tiny 12x12 hitboxes for checkboxes */
+        .tiny-checkbox {
+            width: 12px;
+            height: 12px;
+            cursor: default;
+            margin: 0;
+        }
+        /* Segmented Win98/Win7 Block Progress Bar (No smooth CSS transition!) */
+        .candy-progress {
+            background-color: #1d5ba6;
+            background-image: repeating-linear-gradient(
+                90deg,
+                #1d5ba6 0px,
+                #1d5ba6 10px,
+                #dce2e8 10px,
+                #dce2e8 12px
+            );
+        }
+        /* Hard step blink instead of smooth fade */
+        @keyframes hardBlink {
+            0%, 49% { visibility: visible; }
+            50%, 100% { visibility: hidden; }
+        }
+        .blink-hard {
+            animation: hardBlink 1.2s steps(1, end) infinite;
+        }
+        @keyframes tickerSlide {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
+        .legacy-ticker {
+            display: inline-block;
+            white-space: nowrap;
+            animation: tickerSlide 24s linear infinite;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between py-0 sm:py-3 pb-16">
+
+    <div class="w-full max-w-xl mx-auto portal-wrapper overflow-hidden flex-grow flex flex-col justify-between">
+
+        <!-- Top Utility Strip -->
+        <div class="bg-[#101e33] text-[10px] text-[#c2d1e5] px-2.5 py-1 flex items-center justify-between font-mono border-b border-[#000]">
+            <div>
+                <span>STATUS: ONLINE // PLAYKOT_DB_SHARD_V2.4.1 (BUILD 8902)</span>
+            </div>
+            <div class="hidden sm:block text-[#9ab0cd]">
+                SSL: 128-Bit RC4 | Best viewed in 1024x768
+            </div>
+        </div>
+
+        <!-- Top Enterprise Header with Studio Logo & Game Logo -->
+        <header class="enterprise-header text-white px-2.5 py-2">
+            <div class="flex items-center justify-between gap-2">
+                <div class="flex items-center space-x-2">
+                    <!-- SuperCity Logo -->
+                    <div class="bg-[#10223d] border border-[#456899] px-2 py-1 flex items-center">
+                        <img 
+                            src="logo_w.png" 
+                            alt="SuperCity" 
+                            class="h-8 sm:h-9 w-auto object-contain"
+                            onerror="this.onerror=null; this.src=window.__SC_FALLBACK_LOGO;"
+                        />
+                    </div>
+                    <div class="leading-tight">
+                        <div class="font-bold text-xs sm:text-sm tracking-tight text-[#ffdf70] uppercase font-sans">
+                            Municipal Cache Archiver Utility
+                        </div>
+                        <div class="text-[10px] text-[#bfd4f2] font-mono">
+                            Account Recovery &amp; .SCB State Dump Tool (Form SC-104)
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Side: Official Playkot Publisher Stamp + Rigid Session Expiry Box -->
+                <div class="flex items-center space-x-2 flex-shrink-0">
+                    <!-- Uncropped rectangular studio stamp Box -->
+                    <div class="hidden sm:flex items-center bg-[#ffffff] border border-[#000000] px-1.5 py-0.5 text-black">
+                        <img 
+                            src="1558617796-i4g6vgtjkknabfitxivp.png" 
+                            alt="Playkot" 
+                            class="w-6 h-6 object-contain mr-1"
+                            onerror="this.onerror=null; this.src=window.__PK_FALLBACK_LOGO;"
+                        />
+                        <div class="leading-none text-left">
+                            <div class="text-[8px] font-mono text-gray-600 uppercase">Publisher</div>
+                            <div class="text-[10px] font-bold tracking-tight text-[#4c1d95]">PLAYKOT</div>
+                        </div>
+                    </div>
+
+                    <!-- Phantom Session Timer -->
+                    <div class="bg-[#2b0505] border border-[#cc0000] px-2 py-0.5 text-right">
+                        <div class="text-[9px] uppercase text-[#ffaaaa] block leading-tight font-mono">Session TTL</div>
+                        <div id="sessionTimer" class="font-mono text-xs sm:text-sm font-bold text-[#ff4444] blink-hard">02:00</div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Authentic Early-2010s Promotional Game Artwork Banner -->
+        <div class="bg-[#0e1d34] border-b-2 border-[#4a5a6b] p-1.5">
+            <div class="border border-[#000000] relative bg-[#1c3b68]">
+                <img 
+                    id="heroBannerImg"
+                    src="images.jpeg" 
+                    alt="SuperCity Municipal Banner" 
+                    class="w-full h-28 sm:h-36 object-cover object-center block"
+                    onerror="this.onerror=null; this.src=window.__SC_FALLBACK_BANNER;"
+                />
+                <div class="bg-[#142338] border-t border-[#3b5275] px-2 py-1 flex items-center justify-between text-white text-[10px] font-mono">
+                    <div>
+                        <span class="bg-[#d97706] text-black font-bold px-1 py-0.2 uppercase mr-1">NOTICE</span>
+                        <span>Playkot Cloud Shard v4 Migration Utility</span>
+                    </div>
+                    <span class="text-[#fde047]">Server Load: 94% (HIGH)</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Glossy Web 2.0 Navigation Tab Bar -->
+        <nav class="web20-nav flex items-center justify-between text-[11px]">
+            <div class="flex items-center overflow-x-auto">
+                <button type="button" class="web20-tab web20-tab-active px-3 py-1.5">
+                    [1] Local Cache Backup
+                </button>
+                <button type="button" id="deadTabRestore" class="web20-tab px-3 py-1.5 hover:bg-white text-[#444]">
+                    [2] Restore .SCB File
+                </button>
+                <button type="button" id="deadTabDiag" class="web20-tab px-3 py-1.5 hover:bg-white text-[#444] hidden sm:inline-block">
+                    [3] Shard Ping Test
+                </button>
+            </div>
+            <div class="px-2 text-[10px] font-mono text-[#333] flex-shrink-0">
+                Doc: <span class="underline text-[#0000ee] cursor-pointer" id="kbLinkBtn">KB-4091</span>
+            </div>
+        </nav>
+
+        <!-- Scrolling 2011 Server Maintenance Marquee Ticker -->
+        <div class="bg-[#ffffcc] border-b border-[#b3b366] text-[#332600] text-[11px] font-mono py-1 overflow-hidden relative">
+            <div class="legacy-ticker">
+                *** SYSTEM NOTICE: Playkot Shard Migration in progress. All Level 15+ Mayors must archive their Player ID before 11:59 PM to prevent Lighthouse, Yacht Club &amp; Municipal Zoning rollback. ***
+            </div>
+        </div>
+
+        <!-- System Status Degraded Banner -->
+        <div id="networkDegradedBanner" class="hidden bg-[#fff0b3] border-b border-[#cc9900] text-[#663300] px-2.5 py-1 text-[11px] font-mono text-center">
+            [SYS_WARN 0x19]: Security token rotated due to inactivity. Network state degraded (Packet loss: 14%). Do not refresh page.
+        </div>
+
+        <!-- Main Workspace -->
+        <main class="flex-grow w-full px-2 sm:px-3 pt-2.5 pb-5">
+        
+        <!-- Form View -->
+        <div id="formContainer" class="inset-panel p-2.5 sm:p-3.5 relative">
+            <!-- Rigid Gray System Title Bar inside Form -->
+            <div class="bg-[#cad3de] border border-[#7f9db9] px-2 py-1 mb-3 flex items-center justify-between">
+                <div class="font-bold text-[11px] sm:text-xs uppercase text-[#102542]">
+                    Municipal Profile Extraction Wizard (Form SC-104)
+                </div>
+                <span class="text-[10px] font-mono bg-[#ffffff] border border-[#7f9db9] text-[#111] px-1.5 py-0.2">
+                    Step 1 of 1
+                </span>
+            </div>
+
+            <!-- Sterile Enterprise Error Console -->
+            <div id="errorConsole" class="hidden mb-3 bg-[#ffe6e6] border-2 border-[#cc0000] p-2">
+                <div class="flex items-start justify-between">
+                    <div class="flex items-start space-x-1.5">
+                        <span class="text-[#cc0000] font-bold font-mono text-xs">[ERROR]</span>
+                        <p id="errorMessage" class="text-xs font-mono text-[#660000] leading-tight"></p>
+                    </div>
+                    <button type="button" id="dismissErrorBtn" class="text-[10px] font-mono text-[#990000] underline ml-2 flex-shrink-0">
+                        [Close]
+                    </button>
+                </div>
+            </div>
+
+            <!-- Case Normalization Warning Console -->
+            <div id="warnConsole" class="hidden mb-3 bg-[#ffffcc] border border-[#999900] p-1.5 text-[11px] font-mono text-[#4d3900]">
+                <strong>[WARN 0x04]:</strong> Case mismatch detected with remote Playkot directory. Input normalized to UPPERCASE.
+            </div>
+
+            <!-- STEP 1: Player ID Input + Instant-Jumping Yellow Tooltip + Password Mask -->
+            <fieldset class="legacy-fieldset relative">
+                <legend>1. SuperCity Mayor / Player ID *</legend>
+
+                <div class="flex items-center justify-between mb-1">
+                    <span class="text-[11px] text-[#333]">Enter your unique Mayor UID or Account Name:</span>
+                    <button type="button" id="reopenHelpBtn" class="text-[11px] font-mono text-[#0000ee] underline">
+                        [? What is a Player ID]
+                    </button>
+                </div>
+
+                <!-- Obstructive Yellow Floating Tooltip (NO transition class! Jumps instantaneously) -->
+                <div 
+                    id="annoyingTooltip" 
+                    style="top: -6px; left: 8px; right: 8px;"
+                    class="hidden absolute z-30 bg-[#ffffe1] border border-[#000000] p-2 shadow-[2px_2px_0px_#000] text-[11px] text-black leading-tight"
+                >
+                    <div class="flex items-center justify-between bg-[#000080] text-white px-1.5 py-0.5 mb-1.5">
+                        <strong class="font-mono text-[10px] uppercase">? Municipal Help Topic #402</strong>
+                        <button 
+                            type="button" 
+                            id="tooltipCloseBtn" 
+                            class="bg-[#d4d0c8] border border-white text-black font-mono text-[10px] px-1 leading-none font-bold"
+                        >
+                            X
+                        </button>
+                    </div>
+                    <p class="font-sans text-[11px]">
+                        Your <strong>SuperCity Player ID</strong> is assigned to your municipality when you construct your Town Hall. Note: For security, input is masked and alphabetic character 'O' is rejected (use numeric '0').
+                    </p>
+                </div>
+
+                <div class="flex items-stretch gap-1 mt-1">
+                    <input 
+                        id="playerIdInput" 
+                        type="password" 
+                        autocomplete="off" 
+                        spellcheck="false"
+                        placeholder="Enter Player ID..." 
+                        class="flex-grow win7-input px-2 py-1 text-xs sm:text-sm text-black focus:outline-none"
+                    />
+                    <button 
+                        type="button" 
+                        id="peekPasswordBtn" 
+                        class="enterprise-btn px-2 py-1 text-[11px] font-mono text-black flex-shrink-0"
+                        title="Reveal masked ID for 0.8 seconds"
+                    >
+                        [Show 0.8s]
+                    </button>
+                </div>
+
+                <p id="blurResetNotice" class="hidden text-[10px] font-mono text-[#cc0000] mt-1">
+                    * Security Policy: Input field was cleared because window lost focus. Please re-type ID.
+                </p>
+                <p class="text-[10px] text-[#555] font-mono mt-1">
+                    Field Mask: ENABLED (Context menu paste disabled per Playkot Policy 0x12)
+                </p>
+            </fieldset>
+
+            <!-- STEP 2: Ambiguous Server Node Dropdown -->
+            <fieldset class="legacy-fieldset">
+                <legend>2. Target SuperCity Server Cluster *</legend>
+                <select 
+                    id="serverNodeSelect" 
+                    class="w-full win7-input px-1.5 py-1 text-xs text-black focus:outline-none"
+                >
+                    <option value="">-- Select Active Shard Database --</option>
+                    <option value="US-East-Legacy">US-East-Legacy (Primary Municipal)</option>
+                    <option value="US-East-Node-7">US-East-Node-7 (Cloud Sync v4)</option>
+                    <option value="Local-Host-Proxy-4">Local-Host-Proxy-4 (Fallback)</option>
+                    <option value="Sandbox_Overflow_Test">Sandbox_Overflow_Test (Do Not Use)</option>
+                    <option value="US-East-Legacy-Dep">US-East-Legacy (Deprecated - 2014)</option>
+                </select>
+                <p class="text-[10px] text-[#555] font-mono mt-1">
+                    Note: Selecting a mismatched shard will fail remote ping verification.
+                </p>
+            </fieldset>
+
+            <!-- STEP 3: The Unix Epoch 1970 Date Stepper -->
+            <fieldset class="legacy-fieldset">
+                <legend>3. Last Known Municipal Sync Date *</legend>
+                <div class="flex items-center justify-between mb-1">
+                    <span class="text-[10px] font-mono text-[#444]">Server Clock Reference:</span>
+                    <span id="epochClicksRemaining" class="text-[10px] font-mono text-[#555]">
+                        Delta: 681 months behind server clock
+                    </span>
+                </div>
+
+                <div class="flex items-center justify-between win7-input p-1">
+                    <button 
+                        type="button" 
+                        id="prevMonthBtn" 
+                        class="enterprise-btn px-2 py-0.5 text-[11px] font-mono"
+                    >
+                        &lt;&lt; Prev Mo
+                    </button>
+                    <div id="epochDateDisplay" class="font-mono text-xs sm:text-sm font-bold text-black px-2">
+                        January 15, 1970
+                    </div>
+                    <button 
+                        type="button" 
+                        id="nextMonthBtn" 
+                        class="enterprise-btn px-2 py-0.5 text-[11px] font-mono"
+                    >
+                        Next Mo &gt;&gt;
+                    </button>
+                </div>
+
+                <!-- Hidden-in-plain-sight bypass link -->
+                <div class="mt-1.5 flex justify-between items-center">
+                    <span id="dateClickCounterText" class="text-[10px] font-mono text-[#555]">Manual steps: 0</span>
+                    <button 
+                        type="button" 
+                        id="bypassEpochBtn" 
+                        class="text-[10px] font-mono text-[#444] hover:text-[#0000ee] underline cursor-pointer"
+                    >
+                        [Override: Use System Clock (2026-10-15)]
+                    </button>
+                </div>
+            </fieldset>
+
+            <!-- STEP 4: Cascading Checkboxes with Tiny Hitboxes -->
+            <fieldset class="legacy-fieldset">
+                <legend>4. Municipal Overwrite Affidavits *</legend>
+                <div class="flex justify-between items-baseline mb-1.5">
+                    <span class="text-[10px] text-[#444]">Both boxes required to unlock archive write:</span>
+                    <span class="text-[9px] font-mono text-[#666]">Order rule: Check Item 2 prior to Item 1</span>
+                </div>
+
+                <!-- Checkbox 1 -->
+                <div class="flex items-start space-x-2 mb-2 bg-[#ffffff] p-1.5 border border-[#a0aec0]">
+                    <div class="pt-0.5 flex items-center justify-center">
+                        <input id="chkActiveProfile" type="checkbox" class="tiny-checkbox" />
+                    </div>
+                    <div id="fakeLabel1" class="text-[11px] text-[#111] select-none cursor-default leading-tight">
+                        <strong>Item 1:</strong> I confirm this Player ID corresponds to an active SuperCity municipality and authorize local .SCB write.
+                        <span id="hitboxHint1" class="hidden block text-[10px] text-[#994d00] font-mono mt-0.5">
+                            [UI Notice: Label binding disabled in v2.4. Click the 12x12px checkbox square directly.]
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Checkbox 2 -->
+                <div class="flex items-start space-x-2 bg-[#ffffff] p-1.5 border border-[#a0aec0]">
+                    <div class="pt-0.5 flex items-center justify-center">
+                        <input id="chkReadAccess" type="checkbox" class="tiny-checkbox" />
+                    </div>
+                    <div id="fakeLabel2" class="text-[11px] text-[#111] select-none cursor-default leading-tight">
+                        <strong>Item 2:</strong> Authorize read-only inspection of municipal asset tables, zoning permits, and lighthouse inventory.
+                    </div>
+                </div>
+                <p id="checkboxCascadeNotice" class="hidden text-[10px] font-mono text-[#990000] mt-1">
+                    State reset: Toggling Item 2 invalidates prior Item 1 state. Please re-check Item 1.
+                </p>
+            </fieldset>
+
+            <!-- Submit Button Area -->
+            <div class="pt-2 border-t border-[#99a8b8] flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                <div class="text-[10px] font-mono text-[#444]">
+                     Protocol: LOCAL_DUMP_V2 // Est. size: ~14.2 MB
+                </div>
+                <button 
+                    type="button" 
+                    id="submitBackupBtn" 
+                    class="enterprise-btn-primary px-4 py-1.5 text-xs font-bold uppercase"
+                >
+                    Initialize Local City Backup &gt;&gt;
+                </button>
+            </div>
+        </div>
+
+        <!-- Processing / Progress Bar View (Hidden Initially) -->
+        <div id="processingContainer" class="hidden inset-panel p-3 sm:p-4">
+            <div class="bg-[#cad3de] border border-[#7f9db9] px-2 py-1 mb-3 flex items-center justify-between">
+                <div>
+                    <h2 class="text-xs font-bold uppercase text-[#102542]">Executing Municipal State Dump...</h2>
+                </div>
+                <span class="font-mono text-[10px] text-[#102542] blink-hard">[WORKING...]</span>
+            </div>
+
+            <p id="procSubheader" class="text-[11px] font-mono text-[#333] mb-1.5">Connecting to remote Playkot shard...</p>
+
+            <div class="w-full bg-[#ffffff] border-2 inset border-[#7f9db9] h-6 overflow-hidden relative p-0.5 mb-2">
+                <div 
+                    id="progressBarFill" 
+                    class="candy-progress h-full" 
+                    style="width: 2%;"
+                ></div>
+                <div id="progressPercentText" class="absolute inset-0 flex items-center justify-center font-mono text-xs font-bold text-black bg-white/70 px-1 w-fit mx-auto my-auto h-4">
+                    2%
+                </div>
+            </div>
+
+            <div class="bg-[#000000] text-[#00ff00] font-mono text-[11px] p-2 h-36 overflow-y-scroll border-2 inset border-[#888] leading-snug" id="consoleLogBox">
+                <div>[00:00.02] Initializing local IndexedDB storage container...</div>
+            </div>
+
+            <div class="mt-2.5 flex justify-between items-center text-[10px] font-mono text-[#444]">
+                <span id="assetCounterText">Assets indexed: 12 / 48,911</span>
+                <span class="text-[#cc0000] font-bold">DO NOT CLOSE BROWSER WINDOW</span>
+            </div>
+        </div>
+
+        <!-- Final Prank Reveal Screen (Hidden Initially) -->
+        <div id="revealContainer" class="hidden inset-panel p-4 text-center">
+            <div class="bg-[#1b365d] border border-[#000] p-2 mb-3 flex items-center justify-between text-white">
+                <img 
+                    src="logo_w.png" 
+                    alt="SuperCity" 
+                    class="h-7 w-auto object-contain"
+                    onerror="this.onerror=null; this.src=window.__SC_FALLBACK_LOGO;"
+                />
+                <div class="flex items-center bg-white text-black px-1.5 py-0.5 border border-black">
+                    <img 
+                        src="1558617796-i4g6vgtjkknabfitxivp.png" 
+                        alt="Playkot" 
+                        class="w-5 h-5 object-contain mr-1"
+                        onerror="this.onerror=null; this.src=window.__PK_FALLBACK_LOGO;"
+                    />
+                    <span class="font-bold text-[10px] text-[#4c1d95]">PLAYKOT VERIFIED</span>
+                </div>
+            </div>
+
+            <div class="bg-[#e6ffe6] border-2 border-[#008000] text-[#004d00] px-3 py-2 mb-3 font-mono text-xs font-bold">
+                [OK] ARCHIVE_STATUS: 100% COMPLETE (CHECKSUM VALID)
+            </div>
+            
+            <h2 class="text-sm sm:text-base font-bold text-black">
+                Profile Verified: Mayor <span id="finalMayorName" class="text-[#0000ee] font-mono underline"></span>
+            </h2>
+
+            <div class="mt-3 bg-white border border-[#7f9db9] p-2.5 text-left font-mono text-xs text-[#222] space-y-1">
+                <div><strong>Target Node:</strong> <span id="finalNodeName">US-East-Legacy</span></div>
+                <div><strong>Sync Timestamp:</strong> 2026-10-15T22:07:13Z</div>
+                <div><strong>UI Mishaps Survived:</strong> <span id="finalSnagCount">0</span></div>
+                <div class="pt-2 border-t border-[#ccc] text-[#111]">
+                    Status: Backed up to local memory. Estimated file size: <strong>0 bytes</strong>.<br>
+                    Prank completed successfully. <strong>Look up at your grandson.</strong>
+                </div>
+            </div>
+
+            <button 
+                type="button" 
+                onclick="location.reload()" 
+                class="mt-3 enterprise-btn px-3 py-1 text-xs font-mono text-black"
+            >
+                [Reset Utility]
+            </button>
+        </div>
+
+        </main>
+
+        <footer class="text-[10px] font-mono text-[#333] py-2 px-2.5 border-t border-[#7f9db9] bg-[#c8d1dc] flex flex-col sm:flex-row items-center justify-between gap-1.5">
+            <div class="flex items-center space-x-2">
+                <img 
+                    src="1558617796-i4g6vgtjkknabfitxivp.png" 
+                    alt="Playkot" 
+                    class="w-4 h-4 object-contain border border-[#666] bg-white p-0.2"
+                    onerror="this.onerror=null; this.src=window.__PK_FALLBACK_LOGO;"
+                />
+                <span>&copy; 2011-2026 Playkot Community Support Utility Build #8902</span>
+            </div>
+            <div class="flex items-center space-x-1 text-[9px]">
+                <span class="bg-[#efefef] border border-[#666] px-1 py-0.2 text-black">W3C XHTML 1.0</span>
+                <span class="bg-[#efefef] border border-[#666] px-1 py-0.2 text-[#006600] font-bold">SSL 128-BIT</span>
+            </div>
+        </footer>
+
+    </div>
+
+    <!-- Cookie / Telemetry Consent Modal Bar -->
+    <div id="cookieBanner" class="hidden fixed bottom-0 inset-x-0 z-40 bg-[#d4d0c8] text-black border-t-2 border-white outline outline-1 outline-black shadow-2xl p-3">
+        <div class="max-w-xl mx-auto">
+            <div class="bg-[#000080] text-white px-2 py-0.5 flex items-center justify-between mb-2">
+                <span class="text-[11px] font-bold font-mono">
+                    Mandatory Municipal Telemetry &amp; Data Compliance (Playkot-99)
+                </span>
+                <span class="text-[10px] font-mono bg-[#d4d0c8] text-black px-1">Action Required</span>
+            </div>
+            <p class="text-[11px] text-black mb-1.5">
+                Before writing local <code class="bg-white px-1 border border-gray-400">.SCB</code> cache files, scroll to the bottom of the Municipal Data Retention Addendum below to unlock the Accept button:
+            </p>
+
+            <div 
+                id="cookieLegalBox" 
+                class="bg-white border-2 inset border-gray-500 text-black font-mono text-[10px] h-24 overflow-y-scroll p-2 mb-2 leading-tight select-none"
+            >
+                <p class="mb-2">SECTION 1.01 - MUNICIPAL TELEMETRY: By archiving your SuperCity Player ID, you grant the Local Cache Utility non-exclusive rights to audit virtual road potholes, unsettled tax revenue, and decorative shrub placement.</p>
+                <p class="mb-2">SECTION 1.02 - PIGEON TRACKING: Third-party analytics may monitor simulated avian migration patterns across your downtown district to optimize cloud packet density.</p>
+                <p class="mb-2">SECTION 1.03 - WAIVER OF SPEED: User acknowledges that free community backup utilities operate on legacy 2011 municipal hardware and waives all complaints regarding 1970 calendar defaults.</p>
+                <p class="mb-2">SECTION 1.04 - GRANDSON CLAUSE: User further acknowledges that if this scroll box feels unusually sluggish, it is due to high-density legal compliance verification protocols.</p>
+                <p class="text-[#000080] font-bold">--- END OF ADDENDUM (Scroll verified. Click Accept below) ---</p>
+            </div>
+
+            <div id="cookiePrefsPanel" class="hidden bg-[#ece9d8] border border-gray-500 p-2 mb-2 text-[11px] font-mono space-y-1 max-h-24 overflow-y-scroll">
+                <label class="flex items-center justify-between">
+                    <span>1. Third-Party Pigeon Tracking Analytics</span>
+                    <input type="checkbox" checked>
+                </label>
+                <label class="flex items-center justify-between">
+                    <span>2. Decorative Fountain Water Pressure Logs</span>
+                    <input type="checkbox" checked>
+                </label>
+                <label class="flex items-center justify-between">
+                    <span>3. Virtual Traffic Jam Acoustic Sampling</span>
+                    <input type="checkbox" checked>
+                </label>
+                <label class="flex items-center justify-between">
+                    <span>4. Sub-Surface Sewer Grid Caching</span>
+                    <input type="checkbox" checked>
+                </label>
+            </div>
+
+            <div class="flex items-center justify-between gap-2">
+                <button 
+                    type="button" 
+                    id="manageCookiesBtn" 
+                    class="enterprise-btn px-2.5 py-1 text-[11px] font-mono"
+                >
+                    [Manage Preferences (15)]
+                </button>
+                <button 
+                    type="button" 
+                    id="acceptCookiesBtn" 
+                    disabled 
+                    class="enterprise-btn-primary px-3 py-1 text-xs font-bold uppercase"
+                >
+                    Accept All &amp; Continue (Scroll First)
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal 1: The 84% Stall Dialog -->
+    <div id="stallModal" class="hidden fixed inset-0 z-50 bg-black/40 flex items-center justify-center p-4">
+        <div class="max-w-sm w-full bg-[#d4d0c8] border-2 outset border-white outline outline-1 outline-black p-1 shadow-[4px_4px_0px_#000]">
+            <div class="bg-[#000080] text-white px-2 py-1 flex items-center justify-between mb-2">
+                <span class="text-xs font-bold font-sans">Shard Response Latency Detected (84%)</span>
+                <span class="bg-[#d4d0c8] text-black font-mono text-[10px] px-1 font-bold border border-white">!</span>
+            </div>
+            <div class="p-2.5">
+                <p class="text-xs text-black leading-snug mb-4">
+                    Session ping to SuperCity Asset Table is taking longer than usual. Please do not close this window. Remaining estimated time: <strong class="font-mono">0 min 19 sec</strong>.
+                </p>
+                <div class="flex items-center justify-between pt-2 border-t border-gray-400">
+                    <button 
+                        type="button" 
+                        id="keepWaitingBtn" 
+                        class="text-[11px] text-gray-600 hover:text-black underline font-mono px-1 py-0.5"
+                    >
+                        Wait (Keep syncing)
+                    </button>
+                    <button 
+                        type="button" 
+                        id="cancelOperationBtn" 
+                        class="enterprise-btn-primary px-4 py-1.5 text-xs font-bold"
+                    >
+                        Cancel Operation
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        window.__SC_FALLBACK_LOGO = "data:image/svg+xml;utf8," + encodeURIComponent(`
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 90" width="320" height="90">
+                <defs>
+                    <linearGradient id="scBlue" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="0%" stop-color="#38bdf8"/>
+                        <stop offset="50%" stop-color="#0284c7"/>
+                        <stop offset="100%" stop-color="#0369a1"/>
+                    </linearGradient>
+                    <linearGradient id="scGold" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="0%" stop-color="#facc15"/>
+                        <stop offset="50%" stop-color="#eab308"/>
+                        <stop offset="100%" stop-color="#ca8a04"/>
+                    </linearGradient>
+                </defs>
+                <text x="6" y="58" font-family="Arial Black, Impact, sans-serif" font-weight="900" font-size="44" fill="url(#scBlue)" stroke="#075985" stroke-width="2.5">SUPER</text>
+                <text x="166" y="60" font-family="Arial Black, Impact, sans-serif" font-weight="900" font-size="52" fill="url(#scGold)" stroke="#854d0e" stroke-width="2.5">CITY</text>
+                <text x="18" y="80" font-family="Tahoma, sans-serif" font-weight="bold" font-size="13" fill="#e2e8f0" letter-spacing="0.5">Build the City of your Dreams!</text>
+            </svg>
+        `);
+
+        window.__PK_FALLBACK_LOGO = "data:image/svg+xml;utf8," + encodeURIComponent(`
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100">
+                <circle cx="50" cy="50" r="48" fill="#6b21a8"/>
+                <path d="M30 35 C30 20, 75 20, 75 50 C75 75, 40 80, 35 65" fill="none" stroke="#ffffff" stroke-width="8" stroke-linecap="round"/>
+                <polygon points="43,42 47,33 52,40" fill="#ffffff"/>
+                <polygon points="53,40 59,34 60,43" fill="#ffffff"/>
+                <ellipse cx="52" cy="46" rx="10" ry="7" fill="#ffffff"/>
+                <circle cx="50" cy="45" r="2.5" fill="#6b21a8"/>
+                <circle cx="56" cy="45" r="2.5" fill="#6b21a8"/>
+                <path d="M15 58 Q35 45 64 53 L60 60 Q35 55 18 65 Z" fill="#ffffff"/>
+            </svg>
+        `);
+
+        window.__SC_FALLBACK_BANNER = "data:image/svg+xml;utf8," + encodeURIComponent(`
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 260" width="800" height="260">
+                <defs>
+                    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="0%" stop-color="#67e8f9"/>
+                        <stop offset="100%" stop-color="#e0f2fe"/>
+                    </linearGradient>
+                </defs>
+                <rect width="800" height="260" fill="url(#sky)"/>
+                <rect x="40" y="35" width="32" height="130" fill="#38bdf8" opacity="0.6"/>
+                <rect x="80" y="60" width="26" height="105" fill="#0284c7" opacity="0.5"/>
+                <ellipse cx="185" cy="45" rx="32" ry="11" fill="#0284c7"/>
+                <rect x="580" y="140" width="220" height="60" fill="#38bdf8"/>
+                <polygon points="660,155 685,155 679,55 666,55" fill="#f8fafc" stroke="#64748b" stroke-width="1.5"/>
+                <polygon points="662,55 683,55 672,38" fill="#ef4444"/>
+                <polygon points="0,260 0,185 260,145 580,260" fill="#a8a29e"/>
+                <rect x="260" y="140" width="90" height="80" fill="#c2410c" stroke="#7c2d12" stroke-width="2"/>
+                <rect x="350" y="155" width="75" height="70" fill="#6d28d9"/>
+                <rect x="430" y="145" width="115" height="80" rx="4" fill="#f59e0b" stroke="#b45309" stroke-width="2"/>
+                <circle cx="485" cy="128" r="16" fill="none" stroke="#b45309" stroke-width="6"/>
+                <text x="275" y="55" font-family="Arial Black, sans-serif" font-weight="900" font-size="34" fill="#0284c7" stroke="#ffffff" stroke-width="2">SUPER</text>
+                <text x="412" y="57" font-family="Arial Black, sans-serif" font-weight="900" font-size="40" fill="#eab308" stroke="#713f12" stroke-width="2">CITY</text>
+            </svg>
+        `);
+
+        (function() {
+            const state = {
+                startTime: Date.now(),
+                snagCount: 0,
+                mercyMode: false,
+                hasShownTooltip: false,
+                tooltipDodges: 0,
+                hasClearedOnBlur: false,
+                serverPingFailedOnce: false,
+                cookieAccepted: false,
+                cookieBannerShown: false,
+                dateSynced: false,
+                currentYear: 1970,
+                currentMonth: 0,
+                manualDateClicks: 0,
+                timerSeconds: 120,
+                progressPct: 0,
+                stallResolved: false
+            };
+
+            const months = [
+                "January", "February", "March", "April", "May", "June",
+                "July", "August", "September", "October", "November", "December"
+            ];
+
+            const playerIdInput = document.getElementById('playerIdInput');
+            const peekPasswordBtn = document.getElementById('peekPasswordBtn');
+            const annoyingTooltip = document.getElementById('annoyingTooltip');
+            const tooltipCloseBtn = document.getElementById('tooltipCloseBtn');
+            const reopenHelpBtn = document.getElementById('reopenHelpBtn');
+            const blurResetNotice = document.getElementById('blurResetNotice');
+            const errorConsole = document.getElementById('errorConsole');
+            const errorMessage = document.getElementById('errorMessage');
+            const dismissErrorBtn = document.getElementById('dismissErrorBtn');
+            const warnConsole = document.getElementById('warnConsole');
+
+            const serverNodeSelect = document.getElementById('serverNodeSelect');
+            const prevMonthBtn = document.getElementById('prevMonthBtn');
+            const nextMonthBtn = document.getElementById('nextMonthBtn');
+            const epochDateDisplay = document.getElementById('epochDateDisplay');
+            const epochClicksRemaining = document.getElementById('epochClicksRemaining');
+            const dateClickCounterText = document.getElementById('dateClickCounterText');
+            const bypassEpochBtn = document.getElementById('bypassEpochBtn');
+
+            const chkActiveProfile = document.getElementById('chkActiveProfile');
+            const chkReadAccess = document.getElementById('chkReadAccess');
+            const fakeLabel1 = document.getElementById('fakeLabel1');
+            const fakeLabel2 = document.getElementById('fakeLabel2');
+            const hitboxHint1 = document.getElementById('hitboxHint1');
+            const checkboxCascadeNotice = document.getElementById('checkboxCascadeNotice');
+
+            const submitBackupBtn = document.getElementById('submitBackupBtn');
+            const cookieBanner = document.getElementById('cookieBanner');
+            const cookieLegalBox = document.getElementById('cookieLegalBox');
+            const acceptCookiesBtn = document.getElementById('acceptCookiesBtn');
+            const manageCookiesBtn = document.getElementById('manageCookiesBtn');
+            const cookiePrefsPanel = document.getElementById('cookiePrefsPanel');
+
+            const sessionTimer = document.getElementById('sessionTimer');
+            const networkDegradedBanner = document.getElementById('networkDegradedBanner');
+
+            const formContainer = document.getElementById('formContainer');
+            const processingContainer = document.getElementById('processingContainer');
+            const revealContainer = document.getElementById('revealContainer');
+            const progressBarFill = document.getElementById('progressBarFill');
+            const progressPercentText = document.getElementById('progressPercentText');
+            const consoleLogBox = document.getElementById('consoleLogBox');
+            const assetCounterText = document.getElementById('assetCounterText');
+            const stallModal = document.getElementById('stallModal');
+            const keepWaitingBtn = document.getElementById('keepWaitingBtn');
+            const cancelOperationBtn = document.getElementById('cancelOperationBtn');
+            const deadTabRestore = document.getElementById('deadTabRestore');
+            const deadTabDiag = document.getElementById('deadTabDiag');
+            const kbLinkBtn = document.getElementById('kbLinkBtn');
+
+            document.querySelectorAll('img').forEach(img => {
+                if (img.complete && img.naturalWidth === 0) {
+                    img.onerror();
+                }
+            });
+
+            function showError(msg) {
+                state.snagCount++;
+                errorMessage.textContent = msg;
+                errorConsole.classList.remove('hidden');
+                playSubtleBeep();
+            }
+
+            function hideError() {
+                errorConsole.classList.add('hidden');
+            }
+
+            if (dismissErrorBtn) dismissErrorBtn.addEventListener('click', hideError);
+
+            if (deadTabRestore) {
+                deadTabRestore.addEventListener('click', () => {
+                    showError("Module Locked (0x31): Complete [1] Local Cache Backup before restoring an .SCB archive.");
+                });
+            }
+            if (deadTabDiag) {
+                deadTabDiag.addEventListener('click', () => {
+                    showError("Access Denied: Shard Ping Diagnostics requires Municipal Administrator clearance.");
+                });
+            }
+            if (kbLinkBtn) {
+                kbLinkBtn.addEventListener('click', () => {
+                    showError("HTTP 404: Help article #KB-4091 was archived during the 2014 Playkot forum migration.");
+                });
+            }
+
+            function playSubtleBeep() {
+                try {
+                    const ctx = new (window.AudioContext || window.webkitAudioContext)();
+                    const osc = ctx.createOscillator();
+                    const gain = ctx.createGain();
+                    osc.type = 'square';
+                    osc.frequency.setValueAtTime(800, ctx.currentTime);
+                    gain.gain.setValueAtTime(0.03, ctx.currentTime);
+                    osc.connect(gain);
+                    gain.connect(ctx.destination);
+                    osc.start();
+                    osc.stop(ctx.currentTime + 0.06);
+                } catch (e) {}
+            }
+
+            setInterval(() => {
+                if (Date.now() - state.startTime > 240000) {
+                    state.mercyMode = true;
+                }
+            }, 5000);
+
+            setInterval(() => {
+                state.timerSeconds--;
+                if (state.timerSeconds <= 0) {
+                    state.timerSeconds = 120;
+                    state.snagCount++;
+                    if (networkDegradedBanner) networkDegradedBanner.classList.remove('hidden');
+                }
+                const mins = String(Math.floor(state.timerSeconds / 60)).padStart(2, '0');
+                const secs = String(state.timerSeconds % 60).padStart(2, '0');
+                if (sessionTimer) sessionTimer.textContent = `${mins}:${secs}`;
+            }, 1000);
+
+            if (playerIdInput) {
+                playerIdInput.addEventListener('focus', () => {
+                    if (!state.hasShownTooltip && annoyingTooltip) {
+                        annoyingTooltip.style.top = '-6px';
+                        annoyingTooltip.style.left = '8px';
+                        annoyingTooltip.style.right = '8px';
+                        annoyingTooltip.classList.remove('hidden');
+                        state.hasShownTooltip = true;
+                    }
+                });
+
+                playerIdInput.addEventListener('blur', () => {
+                    if (!state.hasClearedOnBlur && playerIdInput.value.length > 0 && !state.mercyMode) {
+                        playerIdInput.value = '';
+                        state.hasClearedOnBlur = true;
+                        state.snagCount++;
+                        if (blurResetNotice) blurResetNotice.classList.remove('hidden');
+                        setTimeout(() => {
+                            if (blurResetNotice) blurResetNotice.classList.add('hidden');
+                        }, 5000);
+                    }
+                });
+
+                playerIdInput.addEventListener('keydown', (e) => {
+                    if (e.key.toUpperCase() === 'O' && !state.mercyMode) {
+                        e.preventDefault();
+                        showError("Policy Violation: Alphabetic character 'O' is reserved. Please use numeric '0'.");
+                    }
+                });
+
+                playerIdInput.addEventListener('paste', (e) => {
+                    if (!state.mercyMode) {
+                        e.preventDefault();
+                        showError("Security Alert 0x12: Direct context menu paste blocked. Type ID manually.");
+                    }
+                });
+            }
+
+            if (reopenHelpBtn && annoyingTooltip) {
+                reopenHelpBtn.addEventListener('click', () => {
+                    state.tooltipDodges = 0;
+                    annoyingTooltip.style.top = '-6px';
+                    annoyingTooltip.style.left = '8px';
+                    annoyingTooltip.style.right = '8px';
+                    annoyingTooltip.classList.remove('hidden');
+                });
+            }
+
+            function dodgeTooltip(e) {
+                if (state.tooltipDodges < 2 && !state.mercyMode && annoyingTooltip) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    state.tooltipDodges++;
+                    state.snagCount++;
+                    if (state.tooltipDodges === 1) {
+                        annoyingTooltip.style.top = '26px';
+                        annoyingTooltip.style.left = '22px';
+                        annoyingTooltip.style.right = '-6px';
+                    } else {
+                        annoyingTooltip.style.top = '-18px';
+                        annoyingTooltip.style.left = '-4px';
+                        annoyingTooltip.style.right = '18px';
+                    }
+                } else if (annoyingTooltip) {
+                    annoyingTooltip.classList.add('hidden');
+                }
+            }
+
+            if (tooltipCloseBtn) {
+                tooltipCloseBtn.addEventListener('mousedown', dodgeTooltip);
+                tooltipCloseBtn.addEventListener('touchstart', dodgeTooltip, { passive: false });
+                tooltipCloseBtn.addEventListener('click', () => {
+                    if ((state.tooltipDodges >= 2 || state.mercyMode) && annoyingTooltip) {
+                        annoyingTooltip.classList.add('hidden');
+                    }
+                });
+            }
+
+            if (peekPasswordBtn && playerIdInput) {
+                peekPasswordBtn.addEventListener('mousedown', () => {
+                    playerIdInput.type = 'text';
+                    setTimeout(() => {
+                        playerIdInput.type = 'password';
+                    }, 800);
+                });
+                peekPasswordBtn.addEventListener('touchstart', (e) => {
+                    e.preventDefault();
+                    playerIdInput.type = 'text';
+                    setTimeout(() => {
+                        playerIdInput.type = 'password';
+                    }, 800);
+                });
+            }
+
+            function updateEpochDisplay() {
+                if (epochDateDisplay) {
+                    epochDateDisplay.textContent = `${months[state.currentMonth]} 15, ${state.currentYear}`;
+                }
+                const monthsElapsed = (state.currentYear - 1970) * 12 + state.currentMonth;
+                const remaining = Math.max(0, 681 - monthsElapsed);
+                if (epochClicksRemaining) {
+                    epochClicksRemaining.textContent = `Delta: ${remaining} months behind server clock`;
+                }
+                if (dateClickCounterText) {
+                    dateClickCounterText.textContent = `Manual steps: ${state.manualDateClicks}`;
+                }
+            }
+
+            if (prevMonthBtn) {
+                prevMonthBtn.addEventListener('click', () => {
+                    state.manualDateClicks++;
+                    state.currentMonth--;
+                    if (state.currentMonth < 0) {
+                        state.currentMonth = 11;
+                        state.currentYear--;
+                        if (state.currentYear < 1965) state.currentYear = 1965;
+                    }
+                    updateEpochDisplay();
+                });
+            }
+
+            if (nextMonthBtn) {
+                nextMonthBtn.addEventListener('click', () => {
+                    state.manualDateClicks++;
+                    state.currentMonth++;
+                    if (state.currentMonth > 11) {
+                        state.currentMonth = 0;
+                        state.currentYear++;
+                    }
+                    updateEpochDisplay();
+                    if (state.manualDateClicks >= 5 && bypassEpochBtn) {
+                        bypassEpochBtn.classList.add('text-[#0000ee]', 'font-bold');
+                    }
+                });
+            }
+
+            if (bypassEpochBtn) {
+                bypassEpochBtn.addEventListener('click', () => {
+                    state.dateSynced = true;
+                    state.currentYear = 2026;
+                    state.currentMonth = 9; // October
+                    updateEpochDisplay();
+                    if (epochDateDisplay) epochDateDisplay.textContent = "October 15, 2026 (Synced)";
+                    if (epochClicksRemaining) epochClicksRemaining.textContent = "Delta: 0 months (Synchronized)";
+                });
+            }
+
+            if (fakeLabel1 && chkActiveProfile) {
+                fakeLabel1.addEventListener('click', () => {
+                    hitboxHint1.classList.remove('hidden');
+                    state.snagCount++;
+                    playSubtleBeep();
+                });
+            }
+
+            if (chkReadAccess && chkActiveProfile && checkboxCascadeNotice) {
+                chkReadAccess.addEventListener('change', () => {
+                    if (chkReadAccess.checked && chkActiveProfile.checked) {
+                        chkActiveProfile.checked = false;
+                        checkboxCascadeNotice.classList.remove('hidden');
+                        state.snagCount++;
+                    }
+                });
+            }
+
+            if (serverNodeSelect) {
+                serverNodeSelect.addEventListener('change', () => {
+                    const val = serverNodeSelect.value;
+                    if (val && val !== "US-East-Node-7" && !state.serverPingFailedOnce && !state.mercyMode) {
+                        state.serverPingFailedOnce = true;
+                        showError(`Ping verification failed on [${val}]. Remote directory requires US-East-Node-7 or US-East-Legacy.`);
+                        serverNodeSelect.value = "US-East-Node-7";
+                    }
+                });
+            }
+
+            if (submitBackupBtn) {
+                submitBackupBtn.addEventListener('click', () => {
+                    const idVal = playerIdInput ? playerIdInput.value.trim() : '';
+                    if (!idVal) {
+                        showError("Validation Error: Player ID cannot be empty.");
+                        return;
+                    }
+                    if (!serverNodeSelect || !serverNodeSelect.value) {
+                        showError("Validation Error: Target Server Cluster must be selected.");
+                        return;
+                    }
+                    if (!state.dateSynced && state.currentYear < 2020) {
+                        showError("Sync Error: Municipal date is too far in the past. Use the system clock override.");
+                        return;
+                    }
+                    if (!chkActiveProfile || !chkActiveProfile.checked || !chkReadAccess || !chkReadAccess.checked) {
+                        showError("Affidavit Error: Both municipal overwrite affidavits must be checked.");
+                        return;
+                    }
+
+                    if (!state.cookieAccepted) {
+                        if (cookieBanner) cookieBanner.classList.remove('hidden');
+                        state.cookieBannerShown = true;
+                        return;
+                    }
+
+                    startProcessingSequence();
+                });
+            }
+
+            if (manageCookiesBtn && cookiePrefsPanel) {
+                manageCookiesBtn.addEventListener('click', () => {
+                    cookiePrefsPanel.classList.toggle('hidden');
+                });
+            }
+
+            if (cookieLegalBox && acceptCookiesBtn) {
+                cookieLegalBox.addEventListener('scroll', () => {
+                    const scrolledToBottom = cookieLegalBox.scrollHeight - cookieLegalBox.scrollTop <= cookieLegalBox.clientHeight + 10;
+                    if (scrolledToBottom) {
+                        acceptCookiesBtn.removeAttribute('disabled');
+                        acceptCookiesBtn.textContent = "Accept All & Continue >>";
+                    }
+                });
+
+                acceptCookiesBtn.addEventListener('click', () => {
+                    state.cookieAccepted = true;
+                    if (cookieBanner) cookieBanner.classList.add('hidden');
+                    startProcessingSequence();
+                });
+            }
+
+            function startProcessingSequence() {
+                if (formContainer) formContainer.classList.add('hidden');
+                if (processingContainer) processingContainer.classList.remove('hidden');
+
+                let pct = 2;
+                const logs = [
+                    "Connecting to Playkot secure shard cluster...",
+                    "Allocating 14.2 MB local IndexedDB memory block...",
+                    "Fetching virtual municipal zoning records...",
+                    "Auditing lighthouse and yacht club permits...",
+                    "Compressing simulated pigeon migration logs...",
+                    "Writing .SCB header manifest..."
+                ];
+
+                const interval = setInterval(() => {
+                    if (pct < 84) {
+                        pct += Math.floor(Math.random() * 6) + 2;
+                        if (pct > 84) pct = 84;
+                        if (progressBarFill) progressBarFill.style.width = pct + '%';
+                        if (progressPercentText) progressPercentText.textContent = pct + '%';
+
+                        if (pct % 15 === 0 && consoleLogBox) {
+                            const logIdx = Math.floor(Math.random() * logs.length);
+                            consoleLogBox.innerHTML += `<div>[00:${String(Math.floor(pct/2)).padStart(2,'0')}.14] ${logs[logIdx]}</div>`;
+                            consoleLogBox.scrollTop = consoleLogBox.scrollHeight;
+                        }
+                    } else if (pct === 84 && !state.stallResolved) {
+                        clearInterval(interval);
+                        if (stallModal) stallModal.classList.remove('hidden');
+                    }
+                }, 400);
+            }
+
+            if (keepWaitingBtn && stallModal) {
+                keepWaitingBtn.addEventListener('click', () => {
+                    stallModal.classList.add('hidden');
+                    state.stallResolved = true;
+                    resumeProcessingTo100();
+                });
+            }
+
+            if (cancelOperationBtn && stallModal) {
+                cancelOperationBtn.addEventListener('click', () => {
+                    stallModal.classList.add('hidden');
+                    state.snagCount++;
+                    showError("Operation aborted by user. Re-initiating connection...");
+                    setTimeout(() => {
+                        resumeProcessingTo100();
+                    }, 1200);
+                });
+            }
+
+            function resumeProcessingTo100() {
+                let pct = 84;
+                const interval = setInterval(() => {
+                    pct += 4;
+                    if (progressBarFill) progressBarFill.style.width = pct + '%';
+                    if (progressPercentText) progressPercentText.textContent = pct + '%';
+                    if (consoleLogBox) {
+                        consoleLogBox.innerHTML += `<div>[00:${pct}] Finalizing block checksum verification...</div>`;
+                        consoleLogBox.scrollTop = consoleLogBox.scrollHeight;
+                    }
+                    if (pct >= 100) {
+                        clearInterval(interval);
+                        setTimeout(() => {
+                            if (processingContainer) processingContainer.classList.add('hidden');
+                            if (revealContainer) revealContainer.classList.remove('hidden');
+                            const mayorNameEl = document.getElementById('finalMayorName');
+                            const finalNodeNameEl = document.getElementById('finalNodeName');
+                            const finalSnagCountEl = document.getElementById('finalSnagCount');
+
+                            if (mayorNameEl && playerIdInput) mayorNameEl.textContent = playerIdInput.value || "Mayor";
+                            if (finalNodeNameEl && serverNodeSelect) finalNodeNameEl.textContent = serverNodeSelect.value || "US-East-Legacy";
+                            if (finalSnagCountEl) finalSnagCountEl.textContent = state.snagCount;
+                        }, 800);
+                    }
+                }, 200);
+            }
+        })();
+    </script>
+</body>
+</html>
